@@ -1,11 +1,11 @@
 <template>
     <jet-form-section @submitted="createTeam">
         <template #title>
-            Team Details
+            Familien Details
         </template>
 
         <template #description>
-            Create a new team to collaborate with others on projects.
+            Erstellen Sie eine Familie um mit anderen zusammen zu arbeiten.
         </template>
 
         <template #form>

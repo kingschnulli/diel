@@ -31,7 +31,7 @@ class JetstreamServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->configurePermissions();
+        //$this->configurePermissions();
 
         Jetstream::createTeamsUsing(CreateTeam::class);
         Jetstream::updateTeamNamesUsing(UpdateTeamName::class);
@@ -46,7 +46,7 @@ class JetstreamServiceProvider extends ServiceProvider
      * Configure the roles and permissions that are available within the application.
      *
      * @return void
-     */
+
     protected function configurePermissions()
     {
         Jetstream::defaultApiTokenPermissions(['read']);
@@ -58,10 +58,11 @@ class JetstreamServiceProvider extends ServiceProvider
             'delete',
         ])->description(__('Administrator users can perform any action.'));
 
-        Jetstream::role('editor', __('Editor'), [
+        Jetstream::role('user', __('User'), [
             'read',
             'create',
             'update',
-        ])->description(__('Editor users have the ability to read, create, and update.'));
+        ])->description(__('Users have the ability to participate in events and manage their own data.'));
     }
+     */
 }

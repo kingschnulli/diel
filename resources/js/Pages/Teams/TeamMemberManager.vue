@@ -6,17 +6,17 @@
             <!-- Add Team Member -->
             <jet-form-section @submitted="addTeamMember">
                 <template #title>
-                    Add Team Member
+                    Familienmitglied hinzufügen
                 </template>
 
                 <template #description>
-                    Add a new team member to your team, allowing them to collaborate with you.
+                    Fügen Sie ein Familienmitglied hinzu um zusammen zu arbeiten.
                 </template>
 
                 <template #form>
                     <div class="col-span-6">
                         <div class="max-w-xl text-sm text-gray-600">
-                            Please provide the email address of the person you would like to add to this team.
+                            Bitte geben Sie eine E-Mail Adresse an
                         </div>
                     </div>
 
@@ -76,11 +76,12 @@
             <!-- Team Member Invitations -->
             <jet-action-section class="mt-10 sm:mt-0">
                 <template #title>
-                    Pending Team Invitations
+                    Wartende Einladungen
                 </template>
 
                 <template #description>
-                    These people have been invited to your team and have been sent an invitation email. They may join the team by accepting the email invitation.
+                    Diese Personen wurden von Ihnen eingeladen und haben eine Einladung per E-Mail erhalten. Sie können über den Link
+                    in der E-Mail beitreten.
                 </template>
 
                 <!-- Pending Team Member Invitation List -->
@@ -109,11 +110,11 @@
             <!-- Manage Team Members -->
             <jet-action-section class="mt-10 sm:mt-0">
                 <template #title>
-                    Team Members
+                    Familienmitglieder
                 </template>
 
                 <template #description>
-                    All of the people that are part of this team.
+                    Alle Personen in dieser Familie.
                 </template>
 
                 <!-- Team Member List -->

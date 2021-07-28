@@ -1,41 +1,42 @@
 <template>
     <jet-action-section>
         <template #title>
-            Delete Team
+            Familie löschen
         </template>
 
         <template #description>
-            Permanently delete this team.
+            Familie dauerhaft löschen.
         </template>
 
         <template #content>
             <div class="max-w-xl text-sm text-gray-600">
-                Once a team is deleted, all of its resources and data will be permanently deleted. Before deleting this team, please download any data or information regarding this team that you wish to retain.
+                Sobald eine Familie gelöscht wurde, werden alle zugehörigen Daten mit gelöscht. Bitte sichern Sie sich
+                vorher alle Daten die Sie behalten möchten.
             </div>
 
             <div class="mt-5">
                 <jet-danger-button @click="confirmTeamDeletion">
-                    Delete Team
+                    Familie löschen
                 </jet-danger-button>
             </div>
 
             <!-- Delete Team Confirmation Modal -->
             <jet-confirmation-modal :show="confirmingTeamDeletion" @close="confirmingTeamDeletion = false">
                 <template #title>
-                    Delete Team
+                    Familie löschen
                 </template>
 
                 <template #content>
-                    Are you sure you want to delete this team? Once a team is deleted, all of its resources and data will be permanently deleted.
+                    Wollen Sie diese Familie wirklich löschen. Alle zugehörigen Daten werden dauerhaft gelöscht..
                 </template>
 
                 <template #footer>
                     <jet-secondary-button @click="confirmingTeamDeletion = false">
-                        Cancel
+                        Abbruch
                     </jet-secondary-button>
 
                     <jet-danger-button class="ml-2" @click="deleteTeam" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Delete Team
+                        Familie löschen
                     </jet-danger-button>
                 </template>
             </jet-confirmation-modal>

@@ -28,4 +28,18 @@ class TeamFactory extends Factory
             'personal_team' => true,
         ];
     }
+
+    /**
+     * Indicate that the model's users admin flag should be true.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function admin()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'user_id' => User::factory(['admin' => true]),
+            ];
+        });
+    }
 }

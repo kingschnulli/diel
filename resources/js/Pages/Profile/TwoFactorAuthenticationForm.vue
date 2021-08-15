@@ -1,7 +1,7 @@
 <template>
     <jet-action-section>
         <template #title>
-            Two Factor Authentication
+            2-Faktor Authentifizierung
         </template>
 
         <template #description>

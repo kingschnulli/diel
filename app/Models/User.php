@@ -59,6 +59,11 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    public function currentTeam()
+    {
+        return $this->hasOne(Team::class);
+    }
+
     public function interests()
     {
         return $this->belongsToMany(Interest::class);

@@ -15,6 +15,8 @@
         "laravel/jetstream": "^2.3",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
+        "protonemedia/inertiajs-tables-laravel-query-builder": "^1.2",
+        "spatie/laravel-query-builder": "^3.5",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {

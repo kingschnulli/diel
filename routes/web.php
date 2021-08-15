@@ -27,3 +27,13 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
+
+Route::group(['middleware' => ['auth', 'verified']], function () {
+    // User & Profile...
+    Route::get('/users/index', [\App\Http\Controllers\UserController::class, 'index'])
+        ->name('users.index');
+
+    // Events
+    Route::get('/events/index', [\App\Http\Controllers\EventController::class, 'index'])
+        ->name('events.index');
+});

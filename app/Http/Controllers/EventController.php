@@ -24,7 +24,7 @@ class EventController extends Controller
         $events = QueryBuilder::for(Event::class)
             ->defaultSort('start_date')
             ->allowedSorts(['name', 'start_date', 'end_date'])
-            ->allowedFilters(['name', 'start_date', 'end_date', 'description', $globalSearch])
+            ->allowedFilters(['name', 'start_date', 'end_date', $globalSearch])
             ->paginate()
             ->withQueryString();
 
@@ -32,12 +32,10 @@ class EventController extends Controller
             'events' => $events,
         ])->table(function (InertiaTable $table) {
             $table->addSearchRows([
-                'name' => 'Name',
-                'description' => 'Beschreibung'
+                'name' => 'Name'
             ])->addColumns([
                 'start_date' => 'Beginn',
-                'end_date' => 'Ende',
-                'description' => 'Beschreibung'
+                'end_date' => 'Ende'
             ]);
         });
     }

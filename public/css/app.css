@@ -1316,6 +1316,9 @@ select {
 .w-2 {
 	width: 0.5rem;
 }
+.w-px {
+	width: 1px;
+}
 .w-64 {
 	width: 16rem;
 }
@@ -2208,6 +2211,10 @@ select {
 
 	.sm\:col-span-2 {
 		grid-column: span 2 / span 2;
+	}
+
+	.sm\:col-span-3 {
+		grid-column: span 3 / span 3;
 	}
 
 	.sm\:mx-0 {

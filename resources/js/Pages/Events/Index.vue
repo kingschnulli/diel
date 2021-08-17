@@ -30,7 +30,7 @@
                         </template>
 
                         <template #body>
-                            <tr v-for="event in events.data" :key="event.id">
+                            <tr v-for="event in events.data" :key="event.id" @click="$inertia.visit(route('events.edit', {id: event.id}))">
                                 <td>{{ event.name }}</td>
                                 <td v-show="showColumn('start_date')">{{ event.start_date }}</td>
                                 <td v-show="showColumn('end_date')">{{ event.end_date }}</td>

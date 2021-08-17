@@ -97,7 +97,9 @@ class EventController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Inertia::render('Events/Edit', [
+            'event' => Event::find($id)
+        ]);
     }
 
     /**

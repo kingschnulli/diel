@@ -134,6 +134,11 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $event = Event::find($id);
+        Gate::authorize('update', $event);
+
+        $event->delete();
+
+        return redirect()->route('events.index')->with('success', 'Aufgabe wurde gelöscht.');
     }
 }

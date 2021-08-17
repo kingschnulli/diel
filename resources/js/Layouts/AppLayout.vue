@@ -220,6 +220,7 @@
 
             <!-- Page Content -->
             <main>
+                <jet-flash-messages/>
                 <slot></slot>
             </main>
         </div>
@@ -233,6 +234,7 @@
     import JetDropdownLink from '@/Jetstream/DropdownLink'
     import JetNavLink from '@/Jetstream/NavLink'
     import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
+    import JetFlashMessages from '@/Jetstream/FlashMessages'
 
     export default {
         components: {
@@ -242,6 +244,7 @@
             JetDropdownLink,
             JetNavLink,
             JetResponsiveNavLink,
+            JetFlashMessages,
         },
 
         data() {

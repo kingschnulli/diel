@@ -34,6 +34,5 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         ->name('users.index');
 
     // Events
-    Route::get('/events/index', [\App\Http\Controllers\EventController::class, 'index'])
-        ->name('events.index');
+    Route::resource('events', \App\Http\Controllers\EventController::class);
 });

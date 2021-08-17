@@ -1,9 +1,13 @@
 <template>
     <app-layout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Aufgaben
-            </h2>
+            <div class="flex">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    Aufgaben
+                </h2>
+                <jet-button class="ml-auto" type="link" :href="route('events.create')">+ Neue Aufgabe</jet-button>
+            </div>
+
         </template>
 
         <div class="py-12">
@@ -42,6 +46,7 @@
 
 <script>
 import AppLayout from '@/Layouts/AppLayout'
+import JetButton from '@/Jetstream/Button'
 import { InteractsWithQueryBuilder, Tailwind2 } from '@protonemedia/inertiajs-tables-laravel-query-builder';
 
 export default {
@@ -49,7 +54,8 @@ export default {
 
     components: {
         AppLayout,
-        Table: Tailwind2.Table
+        Table: Tailwind2.Table,
+        JetButton
     },
 
     props: {

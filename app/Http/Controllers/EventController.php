@@ -109,7 +109,21 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $event = Event::find($id);
+        Gate::authorize('update', $event);
+
+        $input = $request->request->all();
+
+        Validator::make($input, [
+            'name' => ['required', 'string', 'max:255'],
+            'quota' => ['required', 'integer', 'min:1'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['required', 'date'],
+        ])->validateWithBag('updatedEvent');
+
+        $event->update($input);
+
+        return redirect()->route('events.index')->with('success', 'Aufgabe wurde aktualisiert.');
     }
 
     /**

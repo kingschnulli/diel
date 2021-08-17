@@ -22241,9 +22241,6 @@ __webpack_require__.r(__webpack_exports__);
     JetInputError: _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_4__.default,
     JetLabel: _Jetstream_Label__WEBPACK_IMPORTED_MODULE_5__.default
   },
-  mounted: function mounted() {
-    console.log('mounted', this.event);
-  },
   props: ['event'],
   data: function data() {
     return {
@@ -22254,9 +22251,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    createEvent: function createEvent() {
-      this.form.post(route('events.store'), {
-        errorBag: 'createEvent',
+    updateEvent: function updateEvent() {
+      this.form.put(route('events.update', {
+        id: this.event.id
+      }), {
+        errorBag: 'updatedEvent',
         preserveScroll: true
       });
     }
@@ -27003,7 +27002,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_jet_form_section = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-form-section");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_jet_form_section, {
-    onSubmitted: $options.createEvent
+    onSubmitted: $options.updateEvent
   }, {
     title: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_1];

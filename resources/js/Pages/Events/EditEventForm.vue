@@ -1,5 +1,5 @@
 <template>
-    <jet-form-section @submitted="createEvent">
+    <jet-form-section @submitted="updateEvent">
         <template #title>
             Aufgaben Details
         </template>
@@ -71,10 +71,6 @@
             JetLabel,
         },
 
-        mounted() {
-            console.log('mounted', this.event)
-        },
-
         props: ['event'],
 
         data() {
@@ -87,9 +83,9 @@
         },
 
         methods: {
-            createEvent() {
-                this.form.post(route('events.store'), {
-                    errorBag: 'createEvent',
+            updateEvent() {
+                this.form.put(route('events.update', {id: this.event.id}), {
+                    errorBag: 'updatedEvent',
                     preserveScroll: true
                 });
             },

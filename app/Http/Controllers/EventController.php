@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\EventGroup;
+use App\Models\Interest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
@@ -48,7 +50,8 @@ class EventController extends Controller
     public function create()
     {
         return Inertia::render('Events/Create', [
-
+            'interests' => Interest::all(),
+            'groups' => EventGroup::all(),
         ]);
     }
 
@@ -96,7 +99,9 @@ class EventController extends Controller
     public function edit($id)
     {
         return Inertia::render('Events/Edit', [
-            'event' => Event::find($id)
+            'event' => Event::with('interests')->find($id),
+            'interests' => Interest::all(),
+            'groups' => EventGroup::all()
         ]);
     }
 
@@ -122,6 +127,8 @@ class EventController extends Controller
         ])->validateWithBag('updatedEvent');
 
         $event->update($input);
+
+        $event->interests()->sync($input['interests']);
 
         return redirect()->route('events.index')->with('success', 'Aufgabe wurde aktualisiert.');
     }

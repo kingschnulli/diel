@@ -12,7 +12,7 @@
 
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                <edit-event-form :event="event" />
+                <edit-event-form :event="event" :interests="interests" :groups="groups" />
             </div>
         </div>
     </app-layout>
@@ -30,7 +30,9 @@
             JetButton
         },
         props: [
-            'event'
+            'event',
+            'interests',
+            'groups'
         ],
         methods: {
             deleteEvent() {

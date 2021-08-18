@@ -20,10 +20,10 @@
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Home
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('events.index')" :active="route().current('events.index')">
+                                <jet-nav-link :href="route('events.index')" :active="route().current('events.*')">
                                     Aufgaben
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('users.index')" :active="route().current('users.index')">
+                                <jet-nav-link :href="route('users.index')" :active="route().current('users.*')">
                                     Familien
                                 </jet-nav-link>
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('reports')">

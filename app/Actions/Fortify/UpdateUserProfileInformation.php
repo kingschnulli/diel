@@ -37,6 +37,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'email' => $input['email'],
             ])->save();
         }
+
+        $user->interests()->sync($input['interests']);
     }
 
     /**

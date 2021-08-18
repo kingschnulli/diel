@@ -21,7 +21,7 @@ class Event extends Model
         return $this->belongsToMany(Interest::class);
     }
 
-    public function eventGroups()
+    public function eventGroup()
     {
         return $this->belongsTo(EventGroup::class);
     }

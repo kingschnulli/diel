@@ -8,7 +8,7 @@
 
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                <create-event-form />
+                <create-event-form :interests="interests" :groups="groups"/>
             </div>
         </div>
     </app-layout>
@@ -19,6 +19,7 @@
     import CreateEventForm from './CreateEventForm'
 
     export default {
+        props: ['interests', 'groups'],
         components: {
             AppLayout,
             CreateEventForm,

@@ -16,7 +16,7 @@
                             ref="photo"
                             @change="updatePhotoPreview">
 
-                <jet-label for="photo" value="Photo" />
+                <jet-label for="photo" value="Profilbild" />
 
                 <!-- Current Profile Photo -->
                 <div class="mt-2" v-show="! photoPreview">
@@ -31,11 +31,11 @@
                 </div>
 
                 <jet-secondary-button class="mt-2 mr-2" type="button" @click.prevent="selectNewPhoto">
-                    Select A New Photo
+                    Profilbild ändern
                 </jet-secondary-button>
 
                 <jet-secondary-button type="button" class="mt-2" @click.prevent="deletePhoto" v-if="user.profile_photo_path">
-                    Remove Photo
+                    Profilbild entfernen
                 </jet-secondary-button>
 
                 <jet-input-error :message="form.errors.photo" class="mt-2" />
@@ -54,15 +54,29 @@
                 <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" />
                 <jet-input-error :message="form.errors.email" class="mt-2" />
             </div>
+
+            <!-- Interests -->
+            <div class="col-span-6 sm:col-span-4">
+                <jet-label for="email" value="Interessen" />
+                <Multiselect
+                    v-model="form.interests"
+                    :options="allInterests"
+                    mode="tags"
+                    value-prop="id"
+                    track-by="name"
+                    label="name"
+                />
+                <jet-input-error :message="form.errors.email" class="mt-2" />
+            </div>
         </template>
 
         <template #actions>
             <jet-action-message :on="form.recentlySuccessful" class="mr-3">
-                Saved.
+                gespeichert.
             </jet-action-message>
 
             <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
+                Speichern
             </jet-button>
         </template>
     </jet-form-section>
@@ -76,6 +90,7 @@
     import JetLabel from '@/Jetstream/Label'
     import JetActionMessage from '@/Jetstream/ActionMessage'
     import JetSecondaryButton from '@/Jetstream/SecondaryButton'
+    import Multiselect from '@vueform/multiselect'
 
     export default {
         components: {
@@ -86,9 +101,10 @@
             JetInputError,
             JetLabel,
             JetSecondaryButton,
+            Multiselect
         },
 
-        props: ['user'],
+        props: ['user', 'allInterests'],
 
         data() {
             return {
@@ -96,6 +112,7 @@
                     _method: 'PUT',
                     name: this.user.name,
                     email: this.user.email,
+                    interests: this.user.interests.map(i => i.id),
                     photo: null,
                 }),
 
@@ -152,3 +169,5 @@
         },
     }
 </script>
+
+<style src="@vueform/multiselect/themes/default.css"></style>

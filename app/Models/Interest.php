@@ -9,13 +9,15 @@ class Interest extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public function users()
     {
         return $this->belongsToMany(User::class);
     }
 
-    public function interests()
+    public function events()
     {
-        return $this->belongtoMany(Interest::class);
+        return $this->belongstoMany(Event::class);
     }
 }

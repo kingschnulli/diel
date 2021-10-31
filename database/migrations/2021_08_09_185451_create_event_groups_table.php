@@ -18,7 +18,7 @@ class CreateEventGroupsTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('description');
-            $table->string('long_description')->nullable();
+            $table->text('long_description')->nullable();
         });
     }
 

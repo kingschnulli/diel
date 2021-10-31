@@ -49,6 +49,8 @@ class EventController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', new Event());
+
         return Inertia::render('Events/Create', [
             'interests' => Interest::all(),
             'groups' => EventGroup::all(),
@@ -63,8 +65,6 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        Gate::authorize('create', new Event());
-
         $input = $request->request->all();
 
         Validator::make($input, [
@@ -74,7 +74,10 @@ class EventController extends Controller
             'end_date' => ['required', 'date'],
         ])->validateWithBag('createEvent');
 
-        Event::create($input);
+        $event = Event::create($input);
+        Gate::authorize('create', $event);
+
+        $event->interests()->sync($input['interests']);
 
         return redirect()->route('events.index')->with('success', 'Neue Aufgabe wurde erstellt.');
     }
@@ -87,7 +90,32 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        //
+        return Inertia::render('Events/Show', [
+            'event' => Event::with(['interests', 'users'])->find($id)
+        ]);
+    }
+
+    /**
+     * Participate in event.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function participate(Request $request, $id)
+    {
+        $event = Event::with('users')->find($id);
+        Gate::authorize('participate', $event);
+        $uid = $request->user()->id;
+
+        if ($event->users()->find($uid)) {
+            $event->users()->detach($request->user()->id);
+            $message = 'Sie nehmen jetzt nicht mehr an dieser Aufgabe teil';
+        } else {
+            $event->users()->attach($request->user()->id);
+            $message = 'Sie nehmen jetzt an dieser Aufgabe teil';
+        }
+        return redirect()->route('events.show', $id)->with('success', $message);
     }
 
     /**
@@ -98,6 +126,8 @@ class EventController extends Controller
      */
     public function edit($id)
     {
+        $event = Event::find($id);
+        Gate::authorize('update', $event);
         return Inertia::render('Events/Edit', [
             'event' => Event::with('interests')->find($id),
             'interests' => Interest::all(),

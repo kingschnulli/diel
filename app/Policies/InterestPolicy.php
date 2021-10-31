@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Event;
+use App\Models\Interest;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class EventPolicy
+class InterestPolicy
 {
     use HandlesAuthorization;
 
@@ -25,12 +25,23 @@ class EventPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Event  $event
+     * @param  \App\Models\Interest  $Interest
      * @return mixed
      */
-    public function view(User $user, Event $event)
+    public function view(User $user, Interest $Interest)
     {
         return true;
+    }
+
+    /**
+     * Determine whether the user can list models.
+     *
+     * @param  \App\Models\User  $user
+     * @return mixed
+     */
+    public function list(User $user)
+    {
+        return $user->admin;
     }
 
     /**
@@ -48,10 +59,10 @@ class EventPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Event  $event
+     * @param  \App\Models\Interest $Interest
      * @return mixed
      */
-    public function update(User $user, Event $event)
+    public function update(User $user, Interest $Interest)
     {
         return $user->admin;
     }
@@ -61,23 +72,11 @@ class EventPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Event  $event
+     * @param  \App\Models\Interest $Interest
      * @return mixed
      */
-    public function delete($user, Event $event)
+    public function delete($user, Interest $Interest)
     {
         return $user->admin;
-    }
-
-    /**
-     * Determine whether the user can participate in event
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Event  $event
-     * @return mixed
-     */
-    public function participate($user, Event $event)
-    {
-        return true;
     }
 }

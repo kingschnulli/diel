@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Event;
+use App\Models\EventGroup;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class EventPolicy
+class EventGroupPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class EventPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Event  $event
+     * @param  \App\Models\EventGroup  $eventGroup
      * @return mixed
      */
-    public function view(User $user, Event $event)
+    public function view(User $user, EventGroup $eventGroup)
     {
         return true;
     }
@@ -48,10 +48,10 @@ class EventPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Event  $event
+     * @param  \App\Models\EventGroup $eventGroup
      * @return mixed
      */
-    public function update(User $user, Event $event)
+    public function update(User $user, EventGroup $eventGroup)
     {
         return $user->admin;
     }
@@ -61,10 +61,10 @@ class EventPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Event  $event
+     * @param  \App\Models\EventGroup $eventGroup
      * @return mixed
      */
-    public function delete($user, Event $event)
+    public function delete($user, EventGroup $eventGroup)
     {
         return $user->admin;
     }
@@ -73,10 +73,10 @@ class EventPolicy
      * Determine whether the user can participate in event
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Event  $event
+     * @param  \App\Models\EventGroup  $eventGroup
      * @return mixed
      */
-    public function participate($user, Event $event)
+    public function participate($user, EventGroup $eventGroup)
     {
         return true;
     }

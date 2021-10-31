@@ -33,9 +33,10 @@
 
                 <div class="sm:col-span-2">
                     <h2 class="text-3xl mb-6">Aktuelle Aufgaben</h2>
-                    <Event />
-                    <Event />
-                    <Event />
+                    <template v-if="events && events.length">
+                        <Event v-for="ev in events" :key="ev.id" :event="ev" />
+                    </template>
+                    <div v-else>Es stehen aktuell keine Aufgaben an, schau doch später noch einmal vorbei.</div>
                 </div>
             </div>
         </div>
@@ -50,5 +51,8 @@
             Event,
             JetApplicationLogo
         },
+        props: {
+            'events': Array
+        }
     }
 </script>

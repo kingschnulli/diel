@@ -18,6 +18,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@example.org'
         ]);
 
+        // Create some user for testing
+        $admin = \App\Models\User::factory()->create([
+            'email' => 'user@example.org'
+        ]);
+
         // Dummy users
         \App\Models\User::factory(10)->create();
 

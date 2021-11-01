@@ -1,6 +1,6 @@
 <template>
     <div class="grid grid-cols-1 sm:grid-cols-2 sm:gap-8 mb-4 pb-4 border-gray-100 border-b">
-        <img src="http://via.placeholder.com/500x300" class="sm:mr-12">
+        <img :src="event.image_url" class="sm:mr-12">
         <div class="flex">
             <div class="flex flex-col">
                 <h3>{{ event.name }}</h3>

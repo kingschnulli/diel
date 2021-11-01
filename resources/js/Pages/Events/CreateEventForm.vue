@@ -20,6 +20,26 @@
                 <jet-input-error :message="form.errors.quota" class="mt-2" />
             </div>
             <div class="col-span-6">
+                <input type="file" class="hidden"
+                       ref="image"
+                       @change="updateImagePreview">
+                <jet-label for="image" value="Bild" />
+
+                <!-- New Profile Photo Preview -->
+                <div class="mt-2" v-show="imagePreview">
+                    <span class="block rounded-full w-20 h-20"
+                          :style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + imagePreview + '\');'">
+                    </span>
+                </div>
+
+                <jet-secondary-button class="mt-2 mr-2" type="button" @click.prevent="selectNewImage">
+                    Bild wählen
+                </jet-secondary-button>
+
+                <jet-input-error :message="form.errors.image" class="mt-2" />
+
+            </div>
+            <div class="col-span-6">
                 <jet-label for="event_group_id" value="Gruppe" />
                 <Multiselect
                     id="event_group_id"
@@ -82,6 +102,7 @@
 
 <script>
     import JetButton from '@/Jetstream/Button'
+    import JetSecondaryButton from '@/Jetstream/SecondaryButton'
     import JetFormSection from '@/Jetstream/FormSection'
     import JetInput from '@/Jetstream/Input'
     import JetTextArea from '@/Jetstream/TextArea.vue'
@@ -94,6 +115,7 @@
 
         components: {
             JetButton,
+            JetSecondaryButton,
             JetFormSection,
             JetInput,
             JetTextArea,
@@ -113,16 +135,41 @@
                     quota: 1,
                     description: '',
                     long_description: '',
-                })
+                    image: null
+                }),
+
+                imagePreview: null,
             }
         },
 
         methods: {
             createEvent() {
+                if (this.$refs.image) {
+                    this.form.image = this.$refs.image.files[0]
+                }
+
                 this.form.post(route('events.store'), {
                     errorBag: 'createEvent',
                     preserveScroll: true
                 });
+            },
+
+            selectNewImage() {
+                this.$refs.image.click();
+            },
+
+            updateImagePreview() {
+                const image = this.$refs.image.files[0];
+
+                if (! image) return;
+
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    this.imagePreview = e.target.result;
+                };
+
+                reader.readAsDataURL(image);
             },
         },
     }

@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     // Events
     Route::post('/events/{id}/participate', [\App\Http\Controllers\EventController::class, 'participate'])->name('events.participate');
+    Route::delete('/events/{id}/deleteimage', [\App\Http\Controllers\EventController::class, 'destroyImage'])->name('events.destroyimage');
     Route::resource('events', \App\Http\Controllers\EventController::class);
 
     // EventGroups

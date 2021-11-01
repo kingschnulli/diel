@@ -20,6 +20,35 @@
                 <jet-input-error :message="form.errors.quota" class="mt-2" />
             </div>
             <div class="col-span-6">
+                <input type="file" class="hidden"
+                       ref="image"
+                       @change="updateImagePreview">
+                <jet-label for="image" value="Bild" />
+
+                <!-- Current Profile Photo -->
+                <div class="mt-2" v-show="! imagePreview">
+                    <img :src="event.image_url" :alt="event.name" class="rounded-full h-20 w-20 object-cover">
+                </div>
+
+                <!-- New Profile Photo Preview -->
+                <div class="mt-2" v-show="imagePreview">
+                    <span class="block rounded-full w-20 h-20"
+                          :style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + imagePreview + '\');'">
+                    </span>
+                </div>
+
+                <jet-secondary-button class="mt-2 mr-2" type="button" @click.prevent="selectNewImage">
+                    Bild ändern
+                </jet-secondary-button>
+
+                <jet-secondary-button type="button" class="mt-2" @click.prevent="deleteImage" v-if="event.image">
+                    Bild entfernen
+                </jet-secondary-button>
+
+                <jet-input-error :message="form.errors.image" class="mt-2" />
+
+            </div>
+            <div class="col-span-6">
                 <jet-label for="event_group_id" value="Gruppe" />
                 <Multiselect
                     id="event_group_id"
@@ -82,6 +111,7 @@
 
 <script>
     import JetButton from '@/Jetstream/Button'
+    import JetSecondaryButton from '@/Jetstream/SecondaryButton'
     import JetFormSection from '@/Jetstream/FormSection'
     import JetInput from '@/Jetstream/Input'
     import JetTextArea from '@/Jetstream/TextArea.vue'
@@ -98,6 +128,7 @@
             JetTextArea,
             JetInputError,
             JetLabel,
+            JetSecondaryButton,
             Multiselect
         },
 
@@ -106,20 +137,63 @@
         data() {
             return {
                 form: this.$inertia.form(Object.assign({}, this.event, {
+                    _method: 'PUT',
                     start_date: dayjs(this.event.start_date).format('YYYY-MM-DDThh:mm'),
                     end_date: dayjs(this.event.end_date).format('YYYY-MM-DDThh:mm'),
                     interests: this.event.interests?.map(i => i.id),
-                    event_group_id: this.event.event_group_id
-                }))
+                    event_group_id: this.event.event_group_id,
+                    image: null
+                })),
+
+                imagePreview: null,
             }
         },
 
         methods: {
             updateEvent() {
-                this.form.put(route('events.update', {id: this.event.id}), {
+                if (this.$refs.image) {
+                    this.form.image = this.$refs.image.files[0]
+                }
+
+                this.form.post(route('events.update', {id: this.event.id}), {
                     errorBag: 'updatedEvent',
-                    preserveScroll: true
+                    preserveScroll: true,
+                    onSuccess: () => (this.clearImageFileInput()),
                 });
+            },
+
+            selectNewImage() {
+                this.$refs.image.click();
+            },
+
+            updateImagePreview() {
+                const image = this.$refs.image.files[0];
+
+                if (! image) return;
+
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    this.imagePreview = e.target.result;
+                };
+
+                reader.readAsDataURL(image);
+            },
+
+            deleteImage() {
+                this.$inertia.delete(route('events.destroyimage', this.event.id), {
+                    preserveScroll: true,
+                    onSuccess: () => {
+                        this.imagePreview = null;
+                        this.clearImageFileInput();
+                    },
+                });
+            },
+
+            clearImageFileInput() {
+                if (this.$refs.image?.value) {
+                    this.$refs.image.value = null;
+                }
             },
         },
     }

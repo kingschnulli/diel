@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class EventGroup extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
-    protected $appends = ['is_participating'];
+    protected $appends = ['is_participating', 'image_url'];
 
     public function events()
     {
@@ -30,5 +31,17 @@ class EventGroup extends Model
         } else {
             return -1;
         }
+    }
+
+    /**
+     * Get the URL to the event image
+     *
+     * @return string
+     */
+    public function getImageUrlAttribute()
+    {
+        return $this->image
+            ? Storage::disk('public')->url('images/'.$this->image)
+            : 'http://via.placeholder.com/500x300';
     }
 }

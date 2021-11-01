@@ -18,6 +18,7 @@ class CreateEventsTable extends Migration
             $table->timestamps();
             $table->foreignId('event_group_id')->nullable();
             $table->string('name');
+            $table->string('image')->nullable();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
             $table->integer('quota', false, true);

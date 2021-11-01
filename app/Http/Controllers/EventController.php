@@ -7,6 +7,7 @@ use App\Models\EventGroup;
 use App\Models\Interest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use ProtoneMedia\LaravelQueryBuilderInertiaJs\InertiaTable;
@@ -67,6 +68,10 @@ class EventController extends Controller
     {
         $input = $request->request->all();
 
+        if ($request->file('image')){
+            $input['image'] = basename($request->file('image')->store('public/images/'));
+        }
+
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'quota' => ['required', 'integer', 'min:1'],
@@ -77,9 +82,10 @@ class EventController extends Controller
         $event = Event::create($input);
         Gate::authorize('create', $event);
 
-        $event->interests()->sync($input['interests']);
+        if (isset($input['interests']))
+            $event->interests()->sync($input['interests']);
 
-        return redirect()->route('events.index')->with('success', 'Neue Aufgabe wurde erstellt.');
+        return redirect()->route('events.edit', $event->id)->with('success', 'Neue Aufgabe wurde erstellt.');
     }
 
     /**
@@ -148,6 +154,14 @@ class EventController extends Controller
         Gate::authorize('update', $event);
 
         $input = $request->request->all();
+        $oldImage = null;
+
+        if ($request->file('image')){
+            $input['image'] = basename($request->file('image')->store('public/images/'));
+            $oldImage = 'public/images/' . $event->image;
+        } else {
+            $input['image'] = $event->image;
+        }
 
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
@@ -158,9 +172,13 @@ class EventController extends Controller
 
         $event->update($input);
 
-        $event->interests()->sync($input['interests']);
+        if ($oldImage) {
+            Storage::delete($oldImage);
+        }
+        if (isset($input['interests']))
+            $event->interests()->sync($input['interests']);
 
-        return redirect()->route('events.index')->with('success', 'Aufgabe wurde aktualisiert.');
+        return redirect()->route('events.edit', $id)->with('success', 'Aufgabe wurde aktualisiert.');
     }
 
     /**
@@ -174,8 +192,32 @@ class EventController extends Controller
         $event = Event::find($id);
         Gate::authorize('update', $event);
 
+        if ($event->image) {
+            Storage::delete('public/images/'.$event->image);
+        }
+
         $event->delete();
 
         return redirect()->route('events.index')->with('success', 'Aufgabe wurde gelöscht.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyImage($id)
+    {
+        $event = Event::find($id);
+        Gate::authorize('update', $event);
+
+        if ($event->image) {
+            Storage::delete('public/images/'.$event->image);
+            $event->image = null;
+            $event->save();
+        }
+
+        return redirect()->route('events.edit', $id)->with('success', 'Bild wurde entfernt.');
     }
 }

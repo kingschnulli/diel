@@ -33,6 +33,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/users/index', [\App\Http\Controllers\UserController::class, 'index'])
         ->name('users.index');
 
+    // Calendar
+    Route::resource('calendar', \App\Http\Controllers\CalendarController::class);
+
     // Events
     Route::post('/events/{id}/participate', [\App\Http\Controllers\EventController::class, 'participate'])->name('events.participate');
     Route::delete('/events/{id}/deleteimage', [\App\Http\Controllers\EventController::class, 'destroyImage'])->name('events.destroyimage');

@@ -26,8 +26,11 @@
                                 <jet-nav-link :href="route('eventgroups.index')" :active="route().current('eventgroups.*')">
                                     Gruppen
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('interests.index')" :active="route().current('interests.*')">
+                                <jet-nav-link v-if="$page.props.user.admin" :href="route('interests.index')" :active="route().current('interests.*')">
                                     Interessen
+                                </jet-nav-link>
+                                <jet-nav-link :href="route('calendar.index')" :active="route().current('calendar.*')">
+                                    Kalender
                                 </jet-nav-link>
                                 <jet-nav-link v-if="$page.props.user.admin" :href="route('users.index')" :active="route().current('users.*')">
                                     Familien

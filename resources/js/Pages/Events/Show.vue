@@ -21,12 +21,11 @@
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
                 <div class="px-4 py-5 bg-white sm:p-6 shadow sm:rounded-tl-md sm:rounded-tr-md">
-                    <img src="http://via.placeholder.com/500x300" class="sm:mr-12">
+                    <img :src="event.image_url" class="sm:mr-12">
                     <small class="text-gray-300">
                         <span v-for="interest in event.interests">#{{ interest.name }}&nbsp;</span>
                     </small>
-                    <div class="mt-6 text-sm">
-                        {{ event.long_description }}
+                    <div class="mt-6 text-sm" v-html="event.long_description">
                     </div>
                     <div class="text-sm">
                         Beginn: {{ $dateTime(event.start_date) }}

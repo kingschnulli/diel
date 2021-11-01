@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
 
         // Dummy data
         \App\Models\Interest::factory(10)->create();
-        \App\Models\Event::factory(10)->create();
+        \App\Models\Event::factory(25)->create();
         \App\Models\EventGroup::factory(10)->create();
 
         // Assign some foreign data to each user

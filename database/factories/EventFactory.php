@@ -22,7 +22,7 @@ class EventFactory extends Factory
      */
     public function definition()
     {
-        $start = $this->faker->dateTimeBetween('now', '+2 months');
+        $start = $this->faker->dateTimeBetween('now', '+4 months');
         $end = clone $start;
         $end->add(new \DateInterval('PT2H'));
 

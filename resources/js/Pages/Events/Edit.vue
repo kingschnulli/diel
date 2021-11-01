@@ -5,7 +5,8 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     Aufgabe bearbeiten
                 </h2>
-                <jet-button class="ml-auto" @click.prevent="deleteEvent">&times; Aufgabe löschen</jet-button>
+                <jet-button type="link" :href="route('events.show', event.id)" class="ml-auto">Aufgabe ansehen</jet-button>
+                <jet-button class="ml-2" @click.prevent="deleteEvent">&times; Aufgabe löschen</jet-button>
             </div>
 
         </template>

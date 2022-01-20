@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,12 +19,17 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@example.org'
         ]);
 
+        // Create some user for testing
+        $admin = \App\Models\User::factory()->create([
+            'email' => 'user@example.org'
+        ]);
+
         // Dummy users
         \App\Models\User::factory(10)->create();
 
         // Dummy data
         \App\Models\Interest::factory(10)->create();
-        \App\Models\Event::factory(10)->create();
+        \App\Models\Event::factory(25)->create();
         \App\Models\EventGroup::factory(10)->create();
 
         // Assign some foreign data to each user

@@ -68,4 +68,16 @@ class EventPolicy
     {
         return $user->admin;
     }
+
+    /**
+     * Determine whether the user can participate in event
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Event  $event
+     * @return mixed
+     */
+    public function participate($user, Event $event)
+    {
+        return true;
+    }
 }

@@ -24,7 +24,8 @@ class EventGroupFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
-            'long_description' => $this->faker->paragraph()
+            'long_description' => $this->faker->paragraph(),
+            'image' => $this->faker->image(storage_path('app/public').'/images/',400,300, null, false)
         ];
     }
 }

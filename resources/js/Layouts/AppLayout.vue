@@ -20,13 +20,22 @@
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Home
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('events.index')" :active="route().current('events.index')">
+                                <jet-nav-link :href="route('events.index')" :active="route().current('events.*')">
                                     Aufgaben
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('users.index')" :active="route().current('users.index')">
+                                <jet-nav-link :href="route('eventgroups.index')" :active="route().current('eventgroups.*')">
+                                    Gruppen
+                                </jet-nav-link>
+                                <jet-nav-link v-if="$page.props.user.admin" :href="route('interests.index')" :active="route().current('interests.*')">
+                                    Interessen
+                                </jet-nav-link>
+                                <jet-nav-link :href="route('calendar.index')" :active="route().current('calendar.*')">
+                                    Kalender
+                                </jet-nav-link>
+                                <jet-nav-link v-if="$page.props.user.admin" :href="route('users.index')" :active="route().current('users.*')">
                                     Familien
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('dashboard')" :active="route().current('reports')">
+                                <jet-nav-link v-if="$page.props.user.admin" :href="route('dashboard')" :active="route().current('reports')">
                                     Reports
                                 </jet-nav-link>
                             </div>

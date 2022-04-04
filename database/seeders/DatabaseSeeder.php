@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +24,9 @@ class DatabaseSeeder extends Seeder
         $admin = \App\Models\User::factory()->create([
             'email' => 'user@example.org'
         ]);
+
+        // Generate image folder
+        Storage::disk('local')->exists('public/images') or Storage::disk('local')->makeDirectory('public/images');
 
         // Dummy users
         \App\Models\User::factory(10)->create();

@@ -25,14 +25,10 @@
                 <div class="grid grid-cols-1 md:grid-cols-2">
                     <div class="p-6">
                         <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                            Diel Introtext hier. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                            <h1>Willkommen zu DIEL!</h1>
+                            DIEL ist die <strong>DI</strong>gitale <strong>EL</strong>ternplattform der LamiKita.<br/>
+                            Hier werden alle Elternengagements verwaltet.
                         </div>
-                    </div>
-                    <div>
-                        <img class="p-6" src="https://www.lamikita.de/fileadmin/user_upload/Download/PM/2021_08_13_PM_LamiKita_feiert_erstes_Sommerfest/lamikita-news-sommerfest-2021-1.jpg"/>
-                    </div>
-                    <div>
-                        <img class="p-6" src="https://www.lamikita.de/fileadmin/user_upload/Download/PM/2021_08_13_PM_LamiKita_feiert_erstes_Sommerfest/lamikita-news-sommerfest-2021-2.jpg" />
                     </div>
                     <div>
                         <img class="p-6" src="https://www.lamikita.de/fileadmin/user_upload/Download/PM/2021_02_25_LamiKita_virtueller_Elternabend/LamiKita_Logo.jpg" />

@@ -40,8 +40,9 @@ class DatabaseSeeder extends Seeder
         $interests = \App\Models\Interest::all();
         $events = \App\Models\Event::all();
         $eventGroups = \App\Models\EventGroup::all();
+        $users = \App\Models\User::all();
 
-        \App\Models\User::all()->each(function ($user) use ($interests, $events, $eventGroups) {
+        $users->each(function ($user) use ($interests, $events, $eventGroups) {
             \App\Models\Team::factory()->create([
                 'user_id' => $user->id
             ]);
@@ -57,11 +58,18 @@ class DatabaseSeeder extends Seeder
             );
         });
 
-        // Add some interests to each event
-        $events->each(function ($event) use ($interests) {
+        // Add some interests and participations to each event
+        $events->each(function ($event) use ($interests, $users) {
             $event->interests()->attach(
                 $interests->random(rand(1, 3))->pluck('id')->toArray()
             );
+            $users->random(rand(1, 3))->each(function ($user) use ($event) {
+                \App\Models\Participation::factory()->create([
+                    'event_id' => $event->id,
+                    'user_id' => $user->id,
+                    'participation_date' => $event->start_date
+                ]);
+            });
         });
 
     }

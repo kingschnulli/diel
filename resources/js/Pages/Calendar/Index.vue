@@ -22,6 +22,7 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout'
 import { Calendar } from 'v-calendar';
+import 'v-calendar/dist/style.css';
 
 export default {
     components: {

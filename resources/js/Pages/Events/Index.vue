@@ -23,6 +23,8 @@
                         <template #head>
                             <tr>
                                 <th @click.prevent="sortBy('name')">Name</th>
+                                <th v-show="showColumn('missing_quota')">Benötigte Personen</th>
+                                <th v-show="showColumn('approximate_hours')" @click.prevent="sortBy('approximate_hours')">Zeitaufwand</th>
                                 <th v-show="showColumn('start_date')" @click.prevent="sortBy('start_date')">Beginn</th>
                                 <th v-show="showColumn('end_date')" @click.prevent="sortBy('end_date')">Ende</th>
                                 <th></th>
@@ -30,8 +32,10 @@
                         </template>
 
                         <template #body>
-                            <tr class="cursor-pointer" v-for="event in events.data" :key="event.id" @click="$inertia.visit(route($page.props.user.admin ? 'events.edit' : 'events.show', {id: event.id}))">
+                            <tr :class="event.is_participating === 1 ? 'bg-green-300 hover:bg-green-200' : ''" class="cursor-pointer" v-for="event in events.data" :key="event.id" @click="$inertia.visit(route($page.props.user.admin ? 'events.edit' : 'events.show', {id: event.id}))">
                                 <td>{{ event.name }}</td>
+                                <td v-show="showColumn('missing_quota')">{{ event.missing_quota }}</td>
+                                <td v-show="showColumn('approximate_hours')">{{ event.approximate_hours }}</td>
                                 <td v-show="showColumn('start_date')">{{ event.start_date }}</td>
                                 <td v-show="showColumn('end_date')">{{ event.end_date }}</td>
                                 <td class="w-px">

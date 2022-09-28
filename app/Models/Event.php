@@ -12,7 +12,7 @@ class Event extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    protected $appends = ['is_participating', 'image_url'];
+    protected $appends = ['is_participating', 'image_url', 'missing_quota'];
 
     public function users()
     {
@@ -36,6 +36,15 @@ class Event extends Model
         } else {
             return -1;
         }
+    }
+
+    public function getMissingQuotaAttribute () {
+        if (isset($this->relations['users'])) {
+            return max(0, $this->quota - count($this->users));
+        }else{
+            return $this->quota;
+        }
+
     }
 
     /**

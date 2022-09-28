@@ -26,8 +26,9 @@ class EventController extends Controller
 
         $events = QueryBuilder::for(Event::class)
             ->defaultSort('start_date')
-            ->allowedSorts(['name', 'start_date', 'end_date'])
-            ->allowedFilters(['name', 'start_date', 'end_date', $globalSearch])
+            ->allowedSorts(['name', 'start_date', 'end_date', 'approximate_hours'])
+            ->allowedFilters(['name', 'start_date', 'end_date', 'approximate_hours', $globalSearch])
+            ->with('users')
             ->paginate()
             ->withQueryString();
 
@@ -37,6 +38,8 @@ class EventController extends Controller
             $table->addSearchRows([
                 'name' => 'Name'
             ])->addColumns([
+                'missing_quota' => 'Benötigte Personen',
+                'approximate_hours' => 'Zeitaufwand',
                 'start_date' => 'Beginn',
                 'end_date' => 'Ende'
             ]);

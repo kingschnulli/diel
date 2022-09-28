@@ -25,13 +25,9 @@
                 <div class="grid grid-cols-1 md:grid-cols-2">
                     <div class="p-6">
                         <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                            <h1>Willkommen zu DIEL!</h1>
-                            DIEL ist die <strong>DI</strong>gitale <strong>EL</strong>ternplattform der LamiKita.<br/>
-                            Hier werden alle Elternengagements verwaltet.
+                            <h1>Willkommen zu LamiFAZ!</h1>
+                            LamiFAZ ist die App zur Verwaltung Eurer <em>FA</em>milien<em>Z</em>eit in der <em>Lami</em>Kita.
                         </div>
-                    </div>
-                    <div>
-                        <img class="p-6" src="https://www.lamikita.de/fileadmin/user_upload/Download/PM/2021_02_25_LamiKita_virtueller_Elternabend/LamiKita_Logo.jpg" />
                     </div>
                 </div>
             </div>

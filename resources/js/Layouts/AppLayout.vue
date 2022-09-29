@@ -32,6 +32,9 @@
                                 <jet-nav-link :href="route('calendar.index')" :active="route().current('calendar.*')">
                                     Kalender
                                 </jet-nav-link>
+                                <jet-nav-link :href="route('participations.index')" :active="route().current('participations.*')">
+                                    Zeiterfassung
+                                </jet-nav-link>
                                 <jet-nav-link v-if="$page.props.user.admin" :href="route('users.index')" :active="route().current('users.*')">
                                     Familien
                                 </jet-nav-link>

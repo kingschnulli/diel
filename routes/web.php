@@ -48,4 +48,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // EventGroups
     Route::resource('interests', \App\Http\Controllers\InterestController::class);
 
+    //Participations
+    Route::resource('participations', \App\Http\Controllers\ParticipationController::class);
+
 });

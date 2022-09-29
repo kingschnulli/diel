@@ -1121,9 +1121,6 @@ select {
 .col-span-6 {
 	grid-column: span 6 / span 6;
 }
-.col-span-4 {
-	grid-column: span 4 / span 4;
-}
 .col-span-3 {
 	grid-column: span 3 / span 3;
 }
@@ -1927,13 +1924,13 @@ select {
 	--tw-text-opacity: 1;
 	color: rgba(209, 213, 219, var(--tw-text-opacity));
 }
-.text-green-300 {
-	--tw-text-opacity: 1;
-	color: rgba(110, 231, 183, var(--tw-text-opacity));
-}
 .text-red-300 {
 	--tw-text-opacity: 1;
 	color: rgba(252, 165, 165, var(--tw-text-opacity));
+}
+.text-green-300 {
+	--tw-text-opacity: 1;
+	color: rgba(110, 231, 183, var(--tw-text-opacity));
 }
 .underline {
 	text-decoration: underline;
@@ -2243,10 +2240,6 @@ select {
 
 	.sm\:col-span-2 {
 		grid-column: span 2 / span 2;
-	}
-
-	.sm\:col-span-3 {
-		grid-column: span 3 / span 3;
 	}
 
 	.sm\:mx-0 {

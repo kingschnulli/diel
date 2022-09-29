@@ -29,6 +29,11 @@ class Event extends Model
         return $this->belongsTo(EventGroup::class);
     }
 
+    public function participations()
+    {
+        return $this->hasMany(Participation::class);
+    }
+
     public function getIsParticipatingAttribute () {
         if (isset($this->relations['users'])) {
             $user = Auth::user();

@@ -9,13 +9,15 @@ class Participation extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public function event()
     {
-        return $this->hasOne(Event::class);
+        return $this->belongsTo(Event::class);
     }
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }

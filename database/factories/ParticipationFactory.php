@@ -27,7 +27,7 @@ class ParticipationFactory extends Factory
     {
         return [
             'description' => $this->faker->sentence(),
-            'minutes' => $this->faker->numberBetween(0, 60),
+            'minutes' => $this->faker->numberBetween(30, 120),
         ];
 
     }

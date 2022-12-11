@@ -33,6 +33,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/users/index', [\App\Http\Controllers\UserController::class, 'index'])
         ->name('users.index');
 
+    Route::get('/families/index', [\App\Http\Controllers\FamilyController::class, 'index'])
+        ->name('families.index');
+
     // Calendar
     Route::resource('calendar', \App\Http\Controllers\CalendarController::class);
 

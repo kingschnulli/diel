@@ -3,32 +3,7 @@
         <div class="p-6 bg-white border-b border-gray-200">
             <div class="grid grid cols-1 sm:grid-cols-3">
                 <div>
-                    <h2 class="text-3xl mb-6">Aktivitäten</h2>
-                    <div class="mb-3 text-sm">
-                        <div>18.06.2021 - Ackerbuddy</div>
-                        <div>Familie Meyer will sich beteiligen</div>
-                    </div>
-                    <div class="mb-3 text-sm">
-                        <div>18.06.2021 - Ackerbuddy</div>
-                        <div>Familie Meyer will sich beteiligen</div>
-                    </div>
-                    <div class="mb-3 text-sm">
-                        <div>18.06.2021 - Ackerbuddy</div>
-                        <div>Familie Meyer will sich beteiligen</div>
-                    </div>
-                    <div class="mb-3 text-sm">
-                        <div>18.06.2021 - Ackerbuddy</div>
-                        <div>Familie Meyer will sich beteiligen</div>
-                    </div>
-                    <div class="mb-3 text-sm">
-                        <div>18.06.2021 - Ackerbuddy</div>
-                        <div>Familie Meyer will sich beteiligen</div>
-                    </div>
-                    <div class="mb-3 text-sm">
-                        <div>18.06.2021 - Ackerbuddy</div>
-                        <div>Familie Meyer will sich beteiligen</div>
-                    </div>
-
+                    <Latest :event-users="eventUsers" />
                 </div>
 
                 <div class="sm:col-span-2">
@@ -46,13 +21,16 @@
 <script>
     import JetApplicationLogo from '@/Jetstream/ApplicationLogo'
     import Event from "@/Pages/Events/Event";
+    import Latest from "../Pages/EventUsers/Latest.vue";
     export default {
         components: {
+            Latest,
             Event,
             JetApplicationLogo
         },
         props: {
-            'events': Array
+            'events': Array,
+            'eventUsers': Array
         }
     }
 </script>

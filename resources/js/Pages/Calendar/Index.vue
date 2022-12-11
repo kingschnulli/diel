@@ -12,7 +12,7 @@
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
                 <div class="px-4 py-5 bg-white sm:p-6 shadow sm:rounded-tl-md sm:rounded-tr-md">
-                    <calendar :attributes="attributes" :columns="2" :rows="2" is-expanded />
+                    <calendar :attributes="attributes" :columns="columns" :rows="2" is-expanded />
                 </div>
             </div>
         </div>
@@ -29,10 +29,19 @@ export default {
         AppLayout,
         Calendar
     },
+    data() { return { windowWidth: window.innerWidth } },
     props: [
         'events'
     ],
+    mounted() {
+        window.addEventListener('resize', () => {
+            this.windowWidth = window.innerWidth
+        })
+    },
     computed: {
+        columns () {
+            return this.windowWidth <= 768 ? 1 : 2
+        },
         attributes () {
             return this.events.map(ev => {
                 return {

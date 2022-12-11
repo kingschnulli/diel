@@ -61,7 +61,7 @@ class ParticipationController extends Controller
         Gate::authorize('create', new Participation());
 
         return Inertia::render('Participations/Create', [
-            'events' => Event::all(),
+            'events' => Event::where('end_date', '>', new \DateTime('-7 days'))->get(),
             'users' => auth()->user()->admin ? \App\Models\User::all() : null
         ]);
     }
@@ -99,7 +99,7 @@ class ParticipationController extends Controller
         Gate::authorize('update', $participation);
         return Inertia::render('Participations/Edit', [
             'participation' => $participation,
-            'events' => Event::all(),
+            'events' => Event::where('end_date', '>', new \DateTime('-7 days'))->get(),
             'users' => auth()->user()->admin ? \App\Models\User::all() : null
         ]);
     }

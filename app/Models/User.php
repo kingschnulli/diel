@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\AuthorizedAttributes;
+use Database\Factories\EventGroupFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,6 +22,7 @@ class User extends Authenticatable
     use HasTeams;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use AuthorizedAttributes;
 
     /**
      * The attributes that are mass assignable.
@@ -37,6 +40,10 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'email',
+        'email_verified_at',
+        'created_at',
+        'updated_at',
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret'
@@ -57,13 +64,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = [
-        'profile_photo_url',
+        'profile_photo_url'
     ];
-
-    public function currentTeam()
-    {
-        return $this->hasOne(Team::class);
-    }
 
     public function interests()
     {
@@ -72,7 +74,7 @@ class User extends Authenticatable
 
     public function events()
     {
-        return $this->belongsToMany(Event::class);
+        return $this->belongsToMany(Event::class)->using(EventUser::class)->withTimestamps()->withPivot('created_at');
     }
 
     public function eventGroups()
@@ -84,4 +86,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Participation::class);
     }
+
 }

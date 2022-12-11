@@ -22,13 +22,13 @@ class EventFactory extends Factory
      */
     public function definition()
     {
-        $start = $this->faker->dateTimeBetween('now', '+4 months');
+        $start = $this->faker->dateTimeThisYear('+1 month');
         $end = clone $start;
         $end->add(new \DateInterval('PT2H'));
 
         return [
             'event_group_id' => EventGroup::factory(),
-            'name' => $this->faker->company,
+            'name' => $this->faker->words(3, true),
             'start_date' => $start,
             'end_date' => $end,
             'approximate_hours' => $this->faker->numberBetween(1, 5),

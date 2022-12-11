@@ -16,7 +16,7 @@ class Event extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->using(EventUser::class)->withTimestamps()->withPivot('created_at');
     }
 
     public function interests()

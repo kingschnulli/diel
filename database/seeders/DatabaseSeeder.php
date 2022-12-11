@@ -16,12 +16,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // Create default admin user
-        $admin = \App\Models\User::factory()->admin()->create([
+        $admin = \App\Models\User::factory()->withPersonalTeam()->admin()->create([
             'email' => 'admin@example.org'
         ]);
 
         // Create some user for testing
-        $admin = \App\Models\User::factory()->create([
+        $users = \App\Models\User::factory()->withPersonalTeam()->create([
             'email' => 'user@example.org'
         ]);
 
@@ -29,24 +29,21 @@ class DatabaseSeeder extends Seeder
         Storage::disk('local')->exists('public/images') or Storage::disk('local')->makeDirectory('public/images');
 
         // Dummy users
-        \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(20)->withPersonalTeam()->create();
 
         // Dummy data
         \App\Models\Interest::factory(10)->create();
-        \App\Models\Event::factory(25)->create();
+        \App\Models\Event::factory(150)->create();
         \App\Models\EventGroup::factory(10)->create();
 
         // Assign some foreign data to each user
         $interests = \App\Models\Interest::all();
         $events = \App\Models\Event::all();
         $eventGroups = \App\Models\EventGroup::all();
+
         $users = \App\Models\User::all();
 
         $users->each(function ($user) use ($interests, $events, $eventGroups) {
-            \App\Models\Team::factory()->create([
-                'user_id' => $user->id
-            ]);
-
             $user->interests()->attach(
                 $interests->random(rand(1, 3))->pluck('id')->toArray()
             );

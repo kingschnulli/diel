@@ -24,10 +24,30 @@ class EventController extends Controller
             });
         });
 
+        $archiveFilter = AllowedFilter::callback('archive', function($query, $value) {
+            if (!$value || $value == 'yes') {
+                $query->where('end_date', '<', new \DateTime());
+            } elseif ($value == 'no') {
+                $query->where('end_date', '>=',  new \DateTime());
+            }
+        });
+
+        $participatingFilter = AllowedFilter::callback('participating', function($query, $value) {
+            if ($value == 'yes') {
+                $query->whereHas('users', function($query) {
+                    $query->where('user_id', auth()->user()->id);
+                });
+            }elseif($value == 'no') {
+                $query->whereDoesntHave('users', function($query) {
+                    $query->where('user_id', auth()->user()->id);
+                });
+            }
+        });
+
         $events = QueryBuilder::for(Event::class)
             ->defaultSort('start_date')
             ->allowedSorts(['name', 'start_date', 'end_date', 'approximate_hours'])
-            ->allowedFilters(['name', 'start_date', 'end_date', 'approximate_hours', $globalSearch])
+            ->allowedFilters(['name', 'start_date', 'end_date', 'approximate_hours', $globalSearch, $archiveFilter, $participatingFilter])
             ->with('users')
             ->paginate()
             ->withQueryString();
@@ -37,7 +57,10 @@ class EventController extends Controller
         ])->table(function (InertiaTable $table) {
             $table->addSearchRows([
                 'name' => 'Name'
-            ])->addColumns([
+            ])
+                ->addFilter('archive', 'Archivierte Aufgaben', ['no' => 'Nein', 'yes' => 'Ja'])
+                ->addFilter('participating', 'Aufgaben an denen ich teilnehme', ['no' => 'Nein', 'yes' => 'Ja'])
+                ->addColumns([
                 'missing_quota' => 'Benötigte Personen',
                 'approximate_hours' => 'Zeitaufwand',
                 'start_date' => 'Beginn',

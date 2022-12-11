@@ -35,6 +35,21 @@
 
                 <jet-input-error :message="form.errors.name" class="mt-2" />
             </div>
+
+            <!-- Num Children -->
+            <div class="col-span-6 sm:col-span-4">
+                <jet-label for="name" value="Anzahl Kinder" />
+
+                <jet-input id="name"
+                           type="number"
+                           min="1"
+                           step="1"
+                           class="mt-1 block w-full"
+                           v-model="form.num_children"
+                           :disabled="! permissions.canUpdateTeam" />
+
+                <jet-input-error :message="form.errors.num_children" class="mt-2" />
+            </div>
         </template>
 
         <template #actions v-if="permissions.canUpdateTeam">
@@ -73,6 +88,7 @@
             return {
                 form: this.$inertia.form({
                     name: this.team.name,
+                    num_children: this.team.num_children,
                 })
             }
         },

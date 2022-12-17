@@ -100,7 +100,7 @@ class EventController extends Controller
 
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'quota' => ['required', 'integer', 'min:1'],
+            'quota' => ['required', 'integer', 'min:0.5'],
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
         ])->validateWithBag('createEvent');
@@ -191,7 +191,7 @@ class EventController extends Controller
 
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'quota' => ['required', 'integer', 'min:1'],
+            'quota' => ['required', 'integer', 'min:0.5'],
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
         ])->validateWithBag('updatedEvent');

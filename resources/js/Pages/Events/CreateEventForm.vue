@@ -16,7 +16,7 @@
             </div>
             <div class="col-span-6 sm:col-span-2">
                 <jet-label for="quota" value="Anzahl Personen" />
-                <jet-input id="quota" type="number" min="1" step="0.5" class="mt-1 block w-full" v-model="form.quota" autofocus />
+                <jet-input id="quota" type="number" min="1" step="1" class="mt-1 block w-full" v-model="form.quota" />
                 <jet-input-error :message="form.errors.quota" class="mt-2" />
             </div>
             <div class="col-span-6">
@@ -66,7 +66,7 @@
             <div class="col-span-3 sm:col-span-2">
                 <jet-label for="approximate_hours" value="Zeitaufwand (Stunden)" />
                 <jet-input id="approximate_hours" type="number" step="0.5" min="0.5" class="mt-1 block w-full" v-model="form.approximate_hours" autofocus />
-                <jet-input-error :message="form.approximate_hours" class="mt-2" />
+                <jet-input-error :message="form.errors.approximate_hours" class="mt-2" />
             </div>
             <div class="col-span-6">
                 <jet-label for="interests" value="Interessen" />
@@ -89,7 +89,7 @@
             </div>
             <div class="col-span-6">
                 <jet-label for="long_description" value="Beschreibung" />
-                <jet-text-area id="long_description" min="1" step="0.5" class="mt-1 block w-full" v-model="form.long_description" autofocus />
+                <jet-text-area id="long_description" class="mt-1 block w-full" v-model="form.long_description" autofocus />
                 <jet-input-error :message="form.errors.long_description" class="mt-2" />
             </div>
         </template>

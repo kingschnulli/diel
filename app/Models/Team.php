@@ -38,10 +38,9 @@ class Team extends JetstreamTeam
      * @var array
      */
     protected $appends = [
-        'quota_month',
-        'quota_month_target',
-        'quota_year',
-        'quota_year_target',
+        'quota',
+        'quota_target',
+        'quota_delta'
     ];
 
     /**
@@ -55,36 +54,66 @@ class Team extends JetstreamTeam
         'deleted' => TeamDeleted::class,
     ];
 
-    public function getQuotaMonthAttribute () {
-        $requestFilter = request()->get('filter');
-        if ($requestFilter && isset($requestFilter['month'])) {
-            $month = \DateTime::createFromFormat('!m', $requestFilter['month'])->format('F');
-        } else {
-            $month = date('F');
+    public function getQuotaAttribute () {
+        $startDate = $this->getRequestStartDate();
+        $endDate = $this->getRequestEndDate();
+
+        $participations = Participation::whereIn('user_id', $this->allUsers()->pluck('id'));
+
+        if ($startDate) {
+            $participations = $participations->where('participation_date', '>=', $startDate);
         }
-        $firstDayOfMonth = new \DateTime('first day of ' . $month);
-        $firstDayOfMonth->setTime(0, 0, 0);
-        $lastDayOfMonth = new \DateTime('last day of ' . $month);
-        $lastDayOfMonth->setTime('23', '59', '59');
-        $participations = Participation::whereIn('user_id', $this->allUsers()->pluck('id'))->whereBetween('participation_date', [$firstDayOfMonth, $lastDayOfMonth]);
+        if ($endDate) {
+            $participations = $participations->where('participation_date', '<=', $endDate);
+        }
+
         return $participations->sum('minutes') / 60;
     }
 
-    public function getQuotaMonthTargetAttribute () {
-        return 2 * $this->num_children;
+    public function getQuotaTargetAttribute () {
+        $startDate = $this->getRequestStartDate();
+        $endDate = $this->getRequestEndDate();
+
+        if ($startDate && $endDate) {
+            $diff = $endDate->diff($startDate);
+            $months = (($diff->y) * 12) + ($diff->m);
+            return $months * $this->num_children * 2;
+        }
     }
 
-    public function getQuotaYearAttribute () {
-        $firstDayOfYear = new \DateTime('first day of January ' . date('Y'));
-        $firstDayOfYear->setTime(0, 0, 0);
-        $lastDayOfYear = new \DateTime('last day of December' . date('Y'));
-        $lastDayOfYear->setTime('23', '59', '59');
-
-        $participations = Participation::whereIn('user_id', $this->allUsers()->pluck('id'))->whereBetween('participation_date', [$firstDayOfYear, $lastDayOfYear]);
-        return $participations->sum('minutes') / 60;
+    public function getQuotaDeltaAttribute() {
+        if ($this->quota_target) {
+            return $this->quota_target - $this->quota;
+        }
     }
 
-    public function getQuotaYearTargetAttribute () {
-        return 24  * $this->num_children;
+    private function getRequestStartDate () {
+        $filter = $this->getRequestFilter();
+        if ($filter) {
+            $startDate = new \DateTime($filter->begin);
+            $startDate->setTime(0, 0, 0);
+            return $startDate;
+        }
     }
+
+    private function getRequestEndDate () {
+        $filter = $this->getRequestFilter();
+        if ($filter) {
+            $endDate = new \DateTime($filter->end);
+            $endDate->setTime(23, 59, 59);
+            return $endDate;
+        }
+    }
+
+    private function getRequestFilter () {
+        $requestFilter = request()->get('filter');
+        if ($requestFilter && isset($requestFilter['global'])) {
+            $filter = json_decode($requestFilter['global']);
+            if ($filter) {
+                return $filter;
+            }
+        }
+        return null;
+    }
+
 }

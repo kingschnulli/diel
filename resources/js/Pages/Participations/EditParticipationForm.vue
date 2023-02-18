@@ -39,7 +39,7 @@
             </div>
             <input v-else type="hidden" v-model="form.user_id" />
             <div class="col-span-6 sm:col-span-4">
-                <jet-label for="minutes" value="Zeit" />
+                <jet-label for="minutes" value="Zeit (Minuten)" />
                 <jet-input id="minutes" type="number" min="1" step="1" class="mt-1 block w-full" v-model="form.minutes" autofocus />
                 <jet-input-error :message="form.errors.minutes" class="mt-2" />
             </div>

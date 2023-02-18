@@ -84,12 +84,13 @@
             </div>
             <div class="col-span-6">
                 <jet-label for="description" value="Kurzbeschreibung" />
-                <jet-input id="description" type="text" class="mt-1 block w-full" v-model="form.description" autofocus />
+                <jet-input id="description" type="text" class="mt-1 block w-full" v-model="form.description" />
                 <jet-input-error :message="form.errors.description" class="mt-2" />
             </div>
-            <div class="col-span-6">
+            <div class="col-span-6 flex flex-col">
                 <jet-label for="long_description" value="Beschreibung" />
-                <jet-text-area id="long_description" class="mt-1 block w-full" v-model="form.long_description" autofocus />
+                <quill-editor toolbar="minimal" v-model:content="form.long_description" content-type="html"/>
+                <!-- <jet-text-area id="long_description" min="1" step="0.5" class="mt-1 block w-full" v-model="form.long_description" autofocus /> -->
                 <jet-input-error :message="form.errors.long_description" class="mt-2" />
             </div>
         </template>
@@ -114,11 +115,14 @@
     import JetInputError from '@/Jetstream/InputError'
     import JetLabel from '@/Jetstream/Label'
     import Multiselect from '@vueform/multiselect'
+    import { QuillEditor } from '@vueup/vue-quill'
+    import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
     export default {
         props: ['interests', 'groups'],
 
         components: {
+            QuillEditor,
             JetButton,
             JetSecondaryButton,
             JetFormSection,

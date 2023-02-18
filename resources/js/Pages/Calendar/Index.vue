@@ -47,9 +47,9 @@ export default {
                 return {
                     key: ev.id,
                     highlight: ev.is_participating === 1,
-                    dot: ev.is_participating !== 1,
+                    bar: ev.is_participating !== 1,
                     popover: {
-                        label: ev.description,
+                        label: ev.name,
                     },
                     dates: {
                         start: ev.start_date,

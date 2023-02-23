@@ -35,16 +35,18 @@
                                 <th v-show="showColumn('quota_target')">Stunden Plan</th>
                                 <th v-show="showColumn('quota')">Stunden ist</th>
                                 <th v-show="showColumn('quota_delta')">Delta</th>
+                                <th v-show="showColumn('active_kids')">Kinder</th>
                             </tr>
                         </template>
 
                         <template #body>
-                            <tr v-for="team in teams.data" :key="team.id" @click="$inertia.visit(route('teams.edit', {id: team.id}))">
+                            <tr v-for="team in teams.data" :key="team.id" @click="$inertia.visit(route('teams.show', {id: team.id}))">
                                 <td>{{ team.name }}</td>
                                 <td><div class="rounded-full w-4 h-4" :class="ratingClass(team)"></div></td>
                                 <td v-show="showColumn('quota_target')">{{ toHourMinuteDisplay(team.quota_target) }}</td>
                                 <td v-show="showColumn('quota')">{{ toHourMinuteDisplay(team.quota) }}</td>
                                 <td v-show="showColumn('quota_delta')">{{ toHourMinuteDisplay(team.quota_delta) }}</td>
+                                <td v-show="showColumn('active_kids')">{{ team.active_kids }}</td>
                             </tr>
                         </template>
                     </Table>

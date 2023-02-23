@@ -33,7 +33,8 @@ class FamilyController extends Controller
                     'name' => 'Familie',
                     'quota_target' => 'Stunden Plan',
                     'quota' => 'Stunden ist',
-                    'quota_delta' => 'Delta'
+                    'quota_delta' => 'Delta',
+                    'active_kids' => 'Kinder'
                 ]);
         });
     }

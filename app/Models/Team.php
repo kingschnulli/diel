@@ -12,6 +12,8 @@ class Team extends JetstreamTeam
 {
     use HasFactory;
 
+    protected $with = ['kids'];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -40,7 +42,8 @@ class Team extends JetstreamTeam
     protected $appends = [
         'quota',
         'quota_target',
-        'quota_delta'
+        'quota_delta',
+        'active_kids'
     ];
 
     /**
@@ -53,6 +56,11 @@ class Team extends JetstreamTeam
         'updated' => TeamUpdated::class,
         'deleted' => TeamDeleted::class,
     ];
+
+    public function kids()
+    {
+        return $this->hasMany(Kid::class);
+    }
 
     public function getQuotaAttribute () {
         $startDate = $this->getRequestStartDate();
@@ -75,9 +83,7 @@ class Team extends JetstreamTeam
         $endDate = $this->getRequestEndDate();
 
         if ($startDate && $endDate) {
-            $diff = $endDate->diff($startDate);
-            $months = (($diff->y) * 12) + ($diff->m);
-            return $months * $this->num_children * 2;
+            return $this->active_kids * 2;
         }
     }
 
@@ -85,6 +91,70 @@ class Team extends JetstreamTeam
         if ($this->quota_target) {
             return $this->quota_target - $this->quota;
         }
+    }
+
+
+    private $activeKids = null;
+
+    public function getActiveKidsAttribute() {
+
+        if ($this->activeKids !== null) {
+            return $this->activeKids;
+        }
+
+        $startDate = $this->getRequestStartDate();
+        $endDate = $this->getRequestEndDate();
+
+        $kids = $this->kids;
+
+        $value = 0;
+
+        \Log::notice("Calculating for team: " . $this->name);
+
+        foreach($kids as $kid) {
+
+            $entryDate = new \DateTime($kid->entry_date);
+            $leaveDate = new \DateTime($kid->leave_date);
+
+            // if the kid is not active in the given time frame, skip it
+            if (
+                $startDate < $entryDate &&
+                $endDate < $entryDate ||
+                $startDate > $leaveDate &&
+                $endDate > $leaveDate
+            ) {
+                continue;
+            }
+
+            \Log::notice("Kid {$kid->name} entry/leave: " . $entryDate->format('Y-m-d') . ' - ' . $leaveDate->format('Y-m-d') );
+
+            $x = max($startDate, $entryDate);
+            $y = min($endDate, $leaveDate);
+
+            \Log::notice( "Relevant start/end : " . $x->format('Y-m-d') . ' - ' . $y->format('Y-m-d') );
+
+            $diff = $y->diff($x);
+            $months = (($diff->y) * 12) + ($diff->m);
+
+            \Log::notice( "Months: " . $months );
+
+            $value += $months;
+        }
+
+        $this->activeKids = $value;
+
+        return $value;
+
+        /*
+        if ($startDate) {
+            $kids = $kids->where('entry_date', '>=', $startDate);
+        }
+        if ($endDate) {
+            $kids = $kids->where('leave_date', '<=', $endDate);
+        }
+
+        return $kids->count();
+        */
     }
 
     private function getRequestStartDate () {

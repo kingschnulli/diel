@@ -54,4 +54,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     //Participations
     Route::resource('participations', \App\Http\Controllers\ParticipationController::class);
 
+    //Kids
+    Route::resource('kids', \App\Http\Controllers\KidsController::class);
+
 });

@@ -42,6 +42,12 @@ class DatabaseSeeder extends Seeder
         $eventGroups = \App\Models\EventGroup::all();
 
         $users = \App\Models\User::all();
+        $teams = \App\Models\Team::all();
+
+        // Add kids for each team
+        $teams->each(function ($team) {
+            $team->kids()->saveMany(\App\Models\Kid::factory(rand(1, 3))->create());
+        });
 
         $users->each(function ($user) use ($interests, $events, $eventGroups) {
             $user->interests()->attach(

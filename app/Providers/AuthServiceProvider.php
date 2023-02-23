@@ -3,12 +3,14 @@
 namespace App\Providers;
 
 use App\Models\Interest;
+use App\Models\Kid;
 use App\Models\Participation;
 use App\Models\Team;
 use App\Models\User;
 use App\Policies\EventGroupPolicy;
 use App\Policies\EventPolicy;
 use App\Policies\InterestPolicy;
+use App\Policies\KidPolicy;
 use App\Policies\ParticipationPolicy;
 use App\Policies\TeamPolicy;
 use App\Policies\UserPolicy;
@@ -27,7 +29,8 @@ class AuthServiceProvider extends ServiceProvider
         Interest::class => InterestPolicy::class,
         Event::class => EventPolicy::class,
         EventGroup::class => EventGroupPolicy::class,
-        Participation::class => ParticipationPolicy::class
+        Participation::class => ParticipationPolicy::class,
+        Kid::class => KidPolicy::class,
     ];
 
     /**

@@ -36,20 +36,43 @@
                 <jet-input-error :message="form.errors.name" class="mt-2" />
             </div>
 
-            <!-- Num Children -->
-            <div class="col-span-6 sm:col-span-4">
-                <jet-label for="name" value="Anzahl Kinder" />
+            <div class="col-span-6">
+                <div class="flex">
+                    <jet-label for="name" value="Kinder" />
+                    <jet-button v-if="$page.props.user.admin" class="ml-auto" type="link" :href="route('kids.create', {team: team.id})">+ Kind hinzufügen</jet-button>
+                </div>
 
-                <jet-input id="name"
-                           type="number"
-                           min="1"
-                           step="1"
-                           class="mt-1 block w-full"
-                           v-model="form.num_children"
-                           :disabled="! permissions.canUpdateTeam" />
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
+                    <Table
+                        :meta="team.kids"
+                        ref="table"
+                    >
+                        <template #tableColumns>
 
-                <jet-input-error :message="form.errors.num_children" class="mt-2" />
+                        </template>
+                        <template #head>
+                            <tr>
+                                <th>Name</th>
+                                <th>Eintritt</th>
+                                <th>Austritt</th>
+                                <th></th>
+                            </tr>
+                        </template>
+
+                        <template #body>
+                            <tr v-for="kid in team.kids" :key="kid.id">
+                                <td>{{ kid.name }}</td>
+                                <td>{{ formatDateString(kid.entry_date) }}</td>
+                                <td>{{ formatDateString(kid.leave_date) }}</td>
+                                <td>
+                                    <jet-button v-if="$page.props.user.admin" class="ml-auto bg-red-400 hover:bg-red-500 active:bg-red-500" @click.prevent="deleteKid(kid.id)">&times;</jet-button>
+                                </td>
+                            </tr>
+                        </template>
+                    </Table>
+                </div>
             </div>
+
         </template>
 
         <template #actions v-if="permissions.canUpdateTeam">
@@ -71,6 +94,7 @@
     import JetInput from '@/Jetstream/Input'
     import JetInputError from '@/Jetstream/InputError'
     import JetLabel from '@/Jetstream/Label'
+    import {Tailwind2} from "@protonemedia/inertiajs-tables-laravel-query-builder";
 
     export default {
         components: {
@@ -80,6 +104,7 @@
             JetInput,
             JetInputError,
             JetLabel,
+            Table: Tailwind2.Table,
         },
 
         props: ['team', 'permissions'],
@@ -100,6 +125,12 @@
                     preserveScroll: true
                 });
             },
+            formatDateString(dateString) {
+                return dateString ? new Date(dateString).toLocaleDateString() : '';
+            },
+            deleteKid(id) {
+                this.$inertia.delete(this.route('kids.destroy', {id: id}));
+            }
         },
     }
 </script>

@@ -43,6 +43,8 @@ class Team extends JetstreamTeam
         'quota',
         'quota_target',
         'quota_delta',
+        'full_quota',
+        'full_quota_target',
         'active_kids'
     ];
 
@@ -87,12 +89,24 @@ class Team extends JetstreamTeam
         }
     }
 
+    public function getFullQuotaAttribute() {
+        $participations = Participation::whereIn('user_id', $this->allUsers()->pluck('id'));
+        return $participations->sum('minutes') / 60;
+    }
+
+    public function getFullQuotaTargetAttribute() {
+        $startDate = new \DateTime('1990-01-01');
+        $endDate = new \DateTime();
+
+        $kids = $this->getActiveKidsInDateRange($startDate, $endDate);
+        return $kids * 2;
+    }
+
     public function getQuotaDeltaAttribute() {
         if ($this->quota_target) {
             return $this->quota_target - $this->quota;
         }
     }
-
 
     private $activeKids = null;
 
@@ -105,6 +119,25 @@ class Team extends JetstreamTeam
         $startDate = $this->getRequestStartDate();
         $endDate = $this->getRequestEndDate();
 
+        $value = $this->getActiveKidsInDateRange($startDate, $endDate);
+
+        $this->activeKids = $value;
+
+        return $value;
+
+        /*
+        if ($startDate) {
+            $kids = $kids->where('entry_date', '>=', $startDate);
+        }
+        if ($endDate) {
+            $kids = $kids->where('leave_date', '<=', $endDate);
+        }
+
+        return $kids->count();
+        */
+    }
+
+    private function getActiveKidsInDateRange($startDate, $endDate) {
         $kids = $this->kids;
 
         $value = 0;
@@ -144,17 +177,6 @@ class Team extends JetstreamTeam
         $this->activeKids = $value;
 
         return $value;
-
-        /*
-        if ($startDate) {
-            $kids = $kids->where('entry_date', '>=', $startDate);
-        }
-        if ($endDate) {
-            $kids = $kids->where('leave_date', '<=', $endDate);
-        }
-
-        return $kids->count();
-        */
     }
 
     private function getRequestStartDate () {

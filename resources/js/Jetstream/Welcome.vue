@@ -4,6 +4,7 @@
             <div class="grid grid cols-1 sm:grid-cols-3">
                 <div>
                     <Latest :event-users="eventUsers" />
+                    <ParticipationChart />
                 </div>
 
                 <div class="sm:col-span-2">
@@ -22,8 +23,10 @@
     import JetApplicationLogo from '@/Jetstream/ApplicationLogo'
     import Event from "@/Pages/Events/Event";
     import Latest from "../Pages/EventUsers/Latest.vue";
+    import ParticipationChart from "@/Pages/Teams/ParticipationChart.vue";
     export default {
         components: {
+            ParticipationChart,
             Latest,
             Event,
             JetApplicationLogo

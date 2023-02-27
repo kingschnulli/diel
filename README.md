@@ -17,9 +17,27 @@ $ cd diel
 $ composer install
 $ npm install
 $ cp .env.example .env
+$ npm run prod
 ```
 
-Modify .env file to your liking, nothing to do for dev environment.
+Modify .env file to your liking, 
+
+Set `ENV=prod` for production environment.
+
+### Setup production environment
+
+``` bash
+$ php artisan migrate:fresh
+$ php artisan db:seed --class=ProductionDatabaseSeeder
+$ php artisan key:generate
+```
+
+#### Default Admin User
+
+Username: admin@example.org <br/>
+Password: password
+
+Change password for production environment.
 
 ### Running locally with docker (sail)
 

@@ -2,7 +2,7 @@
 
 ### Requirements
 
-* Docker
+* Docker (for local environment, otherwise LAMPP Stack)
 * Composer
 * NodeJS
 * PHP >= 8.0

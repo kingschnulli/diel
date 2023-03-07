@@ -4,6 +4,14 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+// Reverse proxy fix
+$app_url = config("app.url");
+if (app()->environment('prod') && !empty($app_url)) {
+    URL::forceRootUrl($app_url);
+    $schema = explode(':', $app_url)[0];
+    URL::forceScheme($schema);
+}
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

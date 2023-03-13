@@ -25,7 +25,7 @@
                         </template>
 
                         <template #body>
-                            <tr v-for="user in users.data" :key="user.id"  @click="$inertia.visit(route('teams.edit', {id: team.id}))">
+                            <tr v-for="user in users.data" :key="user.id"  @click="$inertia.visit(route('users.edit', {id: user.id}))">
                                 <td>{{ user.name }}</td>
                                 <td v-show="showColumn('email')">{{ user.email }}</td>
                                 <td v-show="showColumn('current_team')">{{ user.current_team ? user.current_team.name : 'N/A' }}</td>

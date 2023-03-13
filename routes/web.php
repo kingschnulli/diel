@@ -41,6 +41,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/users/index', [\App\Http\Controllers\UserController::class, 'index'])
         ->name('users.index');
 
+    Route::resource('users', \App\Http\Controllers\UserController::class);
+
     Route::get('/families/index', [\App\Http\Controllers\FamilyController::class, 'index'])
         ->name('families.index');
 

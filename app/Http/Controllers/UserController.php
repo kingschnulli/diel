@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
+use App\Models\Interest;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use ProtoneMedia\LaravelQueryBuilderInertiaJs\InertiaTable;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -37,5 +41,35 @@ class UserController extends Controller
                 'current_team' => 'Familie'
             ]);
         });
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        return Inertia::render('Users/Edit', [
+            'edit_user' => User::with('interests')->find($id),
+            'all_interests' => Interest::all()
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        Gate::authorize('update', $user);
+
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success', 'Benutzer wurde gelöscht.');
     }
 }

@@ -66,7 +66,7 @@
                     track-by="name"
                     label="name"
                 />
-                <jet-input-error :message="form.errors.email" class="mt-2" />
+                <jet-input-error :message="form.errors.interests" class="mt-2" />
             </div>
         </template>
 

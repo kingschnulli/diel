@@ -65,6 +65,10 @@ class Team extends JetstreamTeam
     }
 
     public function getQuotaAttribute () {
+        if (!$this->owner) {
+            return 0;
+        }
+
         $startDate = $this->getRequestStartDate();
         $endDate = $this->getRequestEndDate();
 
@@ -81,6 +85,10 @@ class Team extends JetstreamTeam
     }
 
     public function getQuotaTargetAttribute () {
+        if (!$this->owner) {
+            return 0;
+        }
+
         $startDate = $this->getRequestStartDate();
         $endDate = $this->getRequestEndDate();
 
@@ -90,11 +98,19 @@ class Team extends JetstreamTeam
     }
 
     public function getFullQuotaAttribute() {
+        if (!$this->owner) {
+            return 0;
+        }
+
         $participations = Participation::whereIn('user_id', $this->allUsers()->pluck('id'));
         return $participations->sum('minutes') / 60;
     }
 
     public function getFullQuotaTargetAttribute() {
+        if (!$this->owner) {
+            return 0;
+        }
+
         $startDate = new \DateTime('1990-01-01');
         $endDate = new \DateTime();
 
@@ -103,6 +119,10 @@ class Team extends JetstreamTeam
     }
 
     public function getQuotaDeltaAttribute() {
+        if (!$this->owner) {
+            return 0;
+        }
+
         if ($this->quota_target) {
             return $this->quota_target - $this->quota;
         }
@@ -111,6 +131,10 @@ class Team extends JetstreamTeam
     private $activeKids = null;
 
     public function getActiveKidsAttribute() {
+
+        if (!$this->owner) {
+            return 0;
+        }
 
         if ($this->activeKids !== null) {
             return $this->activeKids;

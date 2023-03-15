@@ -1,9 +1,12 @@
 <template>
     <app-layout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Benutzer
-            </h2>
+            <div class="flex">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    Benutzer
+                </h2>
+                <jet-button v-if="$page.props.user.admin" class="ml-auto" type="link" :href="route('users.create')">+ Neuer Benutzer</jet-button>
+            </div>
         </template>
 
         <div class="py-12">
@@ -41,13 +44,15 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout'
 import { InteractsWithQueryBuilder, Tailwind2 } from '@protonemedia/inertiajs-tables-laravel-query-builder';
+import JetButton from "@/Jetstream/Button.vue";
 
 export default {
     mixins: [InteractsWithQueryBuilder],
 
     components: {
         AppLayout,
-        Table: Tailwind2.Table
+        Table: Tailwind2.Table,
+        JetButton
     },
 
     props: {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Interest;
+use App\Models\Participation;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -54,6 +55,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $user = User::find($id);
+        Gate::authorize('update', $user);
+
         return Inertia::render('Users/Edit', [
             'edit_user' => User::with('interests')->find($id),
             'all_interests' => Interest::all()

@@ -136,12 +136,16 @@ class Team extends JetstreamTeam
             return 0;
         }
 
-        if ($this->activeKids !== null) {
-            return $this->activeKids;
-        }
+        //if ($this->activeKids !== null) {
+        //    return $this->activeKids;
+        //}
 
         $startDate = $this->getRequestStartDate();
         $endDate = $this->getRequestEndDate();
+
+        if (!$startDate || !$endDate) {
+            return 0;
+        }
 
         $value = $this->getActiveKidsInDateRange($startDate, $endDate);
 
@@ -165,8 +169,6 @@ class Team extends JetstreamTeam
         $kids = $this->kids;
 
         $value = 0;
-
-        \Log::notice("Calculating for team: " . $this->name);
 
         foreach($kids as $kid) {
 
@@ -205,6 +207,7 @@ class Team extends JetstreamTeam
 
     private function getRequestStartDate () {
         $filter = $this->getRequestFilter();
+
         if ($filter) {
             $startDate = new \DateTime($filter->begin);
             $startDate->setTime(0, 0, 0);

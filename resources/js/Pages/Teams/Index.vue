@@ -1,9 +1,11 @@
 <template>
     <app-layout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Familien
-            </h2>
+            <div class="flex">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    Familien
+                </h2>
+            </div>
         </template>
 
         <div class="py-12">
@@ -35,7 +37,7 @@
                                 <th v-show="showColumn('quota_target')">Stunden Plan</th>
                                 <th v-show="showColumn('quota')">Stunden ist</th>
                                 <th v-show="showColumn('quota_delta')">Delta</th>
-                                <th v-show="showColumn('active_kids')">Kinder</th>
+                                <th v-show="showColumn('active_kids')">Rel. Monate ges.</th>
                             </tr>
                         </template>
 
@@ -63,6 +65,7 @@ import { InteractsWithQueryBuilder, Tailwind2 } from '@protonemedia/inertiajs-ta
 import JetInput from '@/Jetstream/Input'
 import JetInputError from '@/Jetstream/InputError'
 import JetLabel from '@/Jetstream/Label'
+import JetButton from "@/Jetstream/Button.vue";
 
 export default {
     mixins: [InteractsWithQueryBuilder],
@@ -79,7 +82,8 @@ export default {
         Table: Tailwind2.Table,
         JetInput,
         JetInputError,
-        JetLabel
+        JetLabel,
+        JetButton
     },
 
     props: {

@@ -16,8 +16,14 @@
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <jet-label for="name" value="Email" />
-                <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.email" autofocus />
+                <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.email"  />
                 <jet-input-error :message="form.errors.email" class="mt-2" />
+            </div>
+            <div class="block mt-4 col-span-6 sm:col-span-4">
+                <label class="flex items-center">
+                    <jet-checkbox name="admin" v-model:checked="form.admin" />
+                    <span class="ml-2 text-sm text-gray-600">Ist Administrator</span>
+                </label>
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <jet-label for="interests" value="Interessen" />
@@ -66,9 +72,11 @@
     import JetInputError from '@/Jetstream/InputError'
     import JetLabel from '@/Jetstream/Label'
     import Multiselect from "@vueform/multiselect";
+    import JetCheckbox from "@/Jetstream/Checkbox.vue";
 
     export default {
         components: {
+            JetCheckbox,
             JetButton,
             JetFormSection,
             JetInput,
@@ -85,6 +93,7 @@
                 form: this.$inertia.form({
                     name: '',
                     email: '',
+                    admin: false,
                     current_team: null,
                     interests: [],
                 })

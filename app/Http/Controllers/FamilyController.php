@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Interest;
 use App\Models\Team;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use ProtoneMedia\LaravelQueryBuilderInertiaJs\InertiaTable;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -34,7 +39,7 @@ class FamilyController extends Controller
                     'quota_target' => 'Stunden Plan',
                     'quota' => 'Stunden ist',
                     'quota_delta' => 'Delta',
-                    'active_kids' => 'Kinder'
+                    'active_kids' => 'Rel. Monate. ges.'
                 ]);
         });
     }

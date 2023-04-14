@@ -59,8 +59,9 @@ class UserController extends Controller
         Gate::authorize('update', $user);
 
         return Inertia::render('Users/Edit', [
-            'edit_user' => User::with('interests')->find($id),
-            'all_interests' => Interest::all()
+            'edit_user' => User::with(['interests', 'currentTeam'])->find($id),
+            'all_interests' => Interest::all(),
+            'all_teams' => Team::all(),
         ]);
     }
 
@@ -103,14 +104,14 @@ class UserController extends Controller
             ]
         ])->validateWithBag('createUser');
 
-        if ($input['team']) {
-            $input['current_team_id'] = $input['team'];
+        if ($input['current_team']) {
+            $input['current_team_id'] = $input['current_team'];
         }
 
         $user = User::create($input);
         Gate::authorize('create', $user);
 
-        if (!$input['team']) {
+        if (!$input['current_team']) {
             $user->switchTeam($user->ownedTeams()->create([
                 'name' => 'Familie ' . $input['name'],
                 'personal_team' => true,
@@ -118,6 +119,29 @@ class UserController extends Controller
         }
 
         return redirect()->route('users.index')->with('success', 'Neuer Benutzer wurde erstellt.');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $user = User::find($id);
+        Gate::authorize('update', $user);
+
+        $input = $request->request->all();
+
+        Validator::make($input, [
+            'name' => ['required', 'string', 'max:255']
+        ])->validateWithBag('updateUser');
+
+        $user->update($input);
+
+        return redirect()->route('users.index')->with('success', 'Benutzer wurde aktualisiert.');
     }
 
     /**

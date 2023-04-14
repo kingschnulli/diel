@@ -26,18 +26,6 @@
                 </label>
             </div>
             <div class="col-span-6 sm:col-span-4">
-                <jet-label for="interests" value="Interessen" />
-                <Multiselect
-                    v-model="form.interests"
-                    :options="allInterests"
-                    mode="tags"
-                    value-prop="id"
-                    track-by="name"
-                    label="name"
-                />
-                <jet-input-error :message="form.errors.interests" class="mt-2" />
-            </div>
-            <div class="col-span-6 sm:col-span-4">
                 <jet-label for="team" value="Familie" />
                 <Multiselect
                     v-model="form.team"

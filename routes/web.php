@@ -41,6 +41,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/users/index', [\App\Http\Controllers\UserController::class, 'index'])
         ->name('users.index');
 
+    Route::post('users/{id}', [\App\Http\Controllers\UserController::class, 'update'])
+        ->name('users.update');
+
     Route::resource('users', \App\Http\Controllers\UserController::class);
 
     Route::get('/families/index', [\App\Http\Controllers\FamilyController::class, 'index'])
